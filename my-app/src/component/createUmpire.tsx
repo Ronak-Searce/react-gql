@@ -14,6 +14,10 @@ interface NewUmpire {
   password: string;
 }
 
+interface CreateUmpireData {
+  createUmpire: Umpire;
+}
+
 const CREATE_UMPIRE_MUTATION = gql`
   mutation CreateUmpire($input: NewUmpire!) {
     createUmpire(input: $input) {
@@ -31,7 +35,7 @@ const CreateUmpire: React.FC = () => {
     email: "",
     password: "",
   });
-  const [createUmpire, { loading, error, data }] = useMutation<Umpire>(CREATE_UMPIRE_MUTATION);
+  const [createUmpire, { loading, error, data }] = useMutation<CreateUmpireData>(CREATE_UMPIRE_MUTATION);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +56,7 @@ const CreateUmpire: React.FC = () => {
     <div>
       <h2>Create Umpire</h2>
       <form onSubmit={handleFormSubmit}>
-        <label>
+      <label>
           Name:
           <input type="text" name="name" value={umpireInfo.name} onChange={handleChange} />
         </label>
@@ -74,7 +78,7 @@ const CreateUmpire: React.FC = () => {
       {error && <p>Error: {error.message}</p>}
       {data && (
         <p>
-          New Umpire Created - Name: {data.name}, Username: {data.username}, Email: {data.email}
+          New Umpire Created - Name: {data.createUmpire.name}, Username: {data.createUmpire.username}, Email: {data.createUmpire.email}
         </p>
       )}
     </div>
